@@ -1,14 +1,23 @@
 <p style="color: green"><%= notice %></p>
-
-<h1>Projects</h1>
-
+<center>
+<%= button_to 'Sign Out', destroy_user_session_path, method: 'delete', data: { turbo:false} %>
 <div id="projects">
+  <h1>Project Table </h1>
+  <table>
+    <tr>
+      <td>Project Name</td><td>Project Status</td><td>User Id</td><td>Show</td><td>Edit</td><td>Delete</td>
+    </tr>
   <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "Show this project", project %>
-    </p>
+    <tr>
+      <td><%=project.project_name %></td>
+      <td><%=project.project_status %></td>
+      <td><%=project.user.id%></td>
+      <td><%= button_to 'Show', project_path(project), method: 'get'%></td>
+      <td><%= button_to 'Edit', edit_project_path(project), method: 'get'%></td>
+      <td><%= button_to 'Remove', project_path(project), method: 'delete' %></td>  
+    </tr>
   <% end %>
-</div>
-
+  </table>
 <%= link_to "New project", new_project_path %>
+</div>
+</center>
