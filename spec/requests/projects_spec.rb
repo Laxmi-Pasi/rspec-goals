@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Projects', type: :request do
-  include Devise::Test::IntegrationHelpers
 
   context "when user is not logged in" do
     it 'before action authenticate user' do
@@ -102,6 +101,16 @@ RSpec.describe 'Projects', type: :request do
         end
       end
     end
-  end
 
+    context 'when user is logged out' do
+      it 'return unauthorized status' do
+        sign_out(@user)
+        get projects_url
+        expect(response).to have_http_status(302)
+        follow_redirect!
+        expect(response).to have_http_status(200)
+      end  
+    end
+
+  end
 end
